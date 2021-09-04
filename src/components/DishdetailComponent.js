@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
 
 export default class DishDetail extends Component {
-    constructor(props) {
+    constructor(props){
         super(props);
     }
+  
     renderComments(comments) {
         if (comments != null) {
             return (
@@ -17,7 +18,7 @@ export default class DishDetail extends Component {
                                 <li key={item.id}>
                                    <div className='mb-4'> {item.comment}</div>
                                <div className='mb-4'>
-                                    --{item.author}, {item.date}
+                                    --{item.author},{new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(item.date)))}
                                 </div>
                                 </li>
                             
@@ -32,7 +33,9 @@ export default class DishDetail extends Component {
         }
     }
     render() {
+        if(this.props.dish){
         return (
+            <div className='container'>
             <div className="row">
                 <div className='col-12 col-md-5 m-1'>
                     <Card>
@@ -56,6 +59,9 @@ export default class DishDetail extends Component {
 
                 </div>
             </div>
+            </div>
         )
+        }
+        else return <div></div>
     }
 }
