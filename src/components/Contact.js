@@ -203,9 +203,7 @@ class Contact extends Component {
                                 <Col md={{ size: 3, offset: 1 }}>
                                     <Input type='select' name="contactType"
                                         value={this.state.contactType}
-                                        onChange={this.handleInputChange}
-
-                                    >
+                                        onChange={this.handleInputChange} >
                                         <option>Tel.</option>
                                         <option>E-mail</option>
                                     </Input>
