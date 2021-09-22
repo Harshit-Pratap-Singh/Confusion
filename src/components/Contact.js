@@ -4,6 +4,14 @@ import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Button, Col, Input, Label, Row } from 'reactstrap';
 import { LocalForm, Control, Errors } from 'react-redux-form';
 
+const required=(val)=> (val) && val.length;
+const maxLength=(len)=> (val)=> !(val) || (val.length<=len);
+const minLength=(len)=> (val)=> (val) && (val.length>len);
+const isNum=(val)=> !isNaN(Number(val));
+const validEmail=val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+
+// console.log(isNaN(Number('123')))
+
 class Contact extends Component {
     constructor(props) {
         super(props);
@@ -71,6 +79,19 @@ class Contact extends Component {
                                         name='firstName'
                                         id='firstName'
                                         placeholder='First Name'
+                                        validators={{
+                                            required,maxLength:maxLength(15),minLength:minLength(3)
+                                        }}
+                                    />
+                                    <Errors
+                                        className='text-danger'
+                                        model=".firstName"
+                                        show='touched'
+                                        messages={{
+                                            required: "Required ",
+                                            minLength: 'Must be greater than 3',
+                                            maxLength: 'Must be less than 15',
+                                        }}
                                     />
                                 </Col>
                             </Row>
@@ -82,6 +103,19 @@ class Contact extends Component {
                                         name='lastName'
                                         id='lastName'
                                         placeholder='Last Name'
+                                        validators={{
+                                            required,maxLength:maxLength(15),minLength:minLength(3)
+                                        }}
+                                    />
+                                    <Errors
+                                        className='text-danger'
+                                        model=".lastName"
+                                        show='touched'
+                                        messages={{
+                                            required: "Required ",
+                                            minLength: 'Must be greater than 3',
+                                            maxLength: 'Must be less than 15',
+                                        }}
                                     />
                                 </Col>
                             </Row>
@@ -93,6 +127,20 @@ class Contact extends Component {
                                         name='telNum'
                                         id='telNum'
                                         placeholder='Tel. number'
+                                        validators={{
+                                            required,maxLength : maxLength(15),minLength : minLength(3),isNum
+                                        }}
+                                    />
+                                    <Errors
+                                        className='text-danger'
+                                        model=".telNum"
+                                        show='touched'
+                                        messages={{
+                                            required: "Required ",
+                                            minLength: 'Must be greater than 3 ',
+                                            maxLength: 'Must be less than 15 ',
+                                            isNum:'Must be Number',
+                                        }}
                                     />
                                 </Col>
                             </Row>
@@ -104,6 +152,18 @@ class Contact extends Component {
                                         name='email'
                                         id='email'
                                         placeholder='Email'
+                                        validators={{
+                                            required,validEmail
+                                        }}
+                                    />
+                                     <Errors
+                                        className='text-danger'
+                                        model=".telNum"
+                                        show='touched'
+                                        messages={{
+                                            required: "Required ",
+                                            validEmail: "Invalid Email Address"
+                                        }}
                                     />
                                 </Col>
                             </Row>
