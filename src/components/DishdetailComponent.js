@@ -23,7 +23,7 @@ class CommentForm extends Component {
         console.log(this.state.show);
     }
     handleSubmit(val) {
-        alert(JSON.stringify(val));
+            this.props.addComment(this.props.dishId,val.name,val.comment,val.rating)
     }
 
     render() {
@@ -100,8 +100,11 @@ class CommentForm extends Component {
     }
 }
 
+// ////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
 export default function DishdetailComponent (props){
-    const renderComments = (comments) => {
+    const renderComments = (comments,addComment,dishId) => {
         if (comments != null) {
             return (
                 <div >
@@ -120,7 +123,7 @@ export default function DishdetailComponent (props){
                             )
                         })}
                     </ul>
-                    <CommentForm />
+                    <CommentForm addComment={addComment} dishId={dishId}/>
                 </div>
             )
         }
@@ -156,7 +159,7 @@ export default function DishdetailComponent (props){
                         </Card>
                     </div>
                     <div className='col-12 col-md-5 m-1'>
-                        {renderComments(props.comments)}
+                        {renderComments(props.comments,props.addComment,props.dish.id)}
                     </div>
 
                 </div>
