@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Control, Errors, LocalForm } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
+import Loading from './Loading';
 
 const required = (val) => (val) && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -131,7 +132,21 @@ export default function DishdetailComponent (props){
             return <div></div>
         }
     }
-    if (props.dish) {
+    if(props.isLoading){
+        return <div className="container">
+            <div className="row">
+                <Loading/>
+            </div>
+        </div>
+    }
+    else if(props.errorMess){
+        return <div className="container">
+            <div className="row">
+                <h4>{props.errorMess}</h4>
+            </div>
+        </div>
+    }
+    else if (props.dish) {
         return (
             <div className='container'>
                 <div className="row">

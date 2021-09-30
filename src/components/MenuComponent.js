@@ -1,9 +1,10 @@
     import React from 'react'
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Card, CardImg, CardImgOverlay, CardTitle} from "reactstrap";
+import Loading from './Loading';
 
 export default function Menu(props){
-        const menu = props.dishes.map((dish) => {
+        const menu = props.dishes.dishes.map((dish) => {
             return (
                 <div key={dish.id} className="col-12 col-md-5 m-1">
                     <Card>
@@ -19,6 +20,22 @@ export default function Menu(props){
                 </div>
             );
         });
+
+        if(props.dishes.isLoading){
+            return <div className="container">
+                <div className="row">
+                    <Loading/>
+                </div>
+            </div>
+        }
+        else if(props.dishes.errorMess){
+            return <div className="container">
+                <div className="row">
+                    <h4>{props.dishes.errorMess}</h4>
+                </div>
+            </div>
+        }
+        else{
         return (
             <div className='container'>
             <div className="row">
@@ -36,5 +53,5 @@ export default function Menu(props){
                 </div>      
             </div>
         )
-    }
+    }}
 
