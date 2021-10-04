@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Control, Errors, LocalForm } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
+import { baseUrl } from '../shared/baseUrl';
 import Loading from './Loading';
 
 const required = (val) => (val) && val.length;
@@ -162,7 +163,7 @@ export default function DishdetailComponent (props){
                 <div className="row">
                     <div className='col-12 col-md-5 m-1'>
                         <Card>
-                            <CardImg width='100%' src={props.dish.image} alt={props.dish.name} />
+                            <CardImg width='100%' src={baseUrl+props.dish.image} alt={props.dish.name} />
                             <CardBody>
                                 <CardTitle>
                                     {props.dish.name}
