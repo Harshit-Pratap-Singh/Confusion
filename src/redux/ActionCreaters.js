@@ -2,15 +2,45 @@ import { ADD_COMMENT, ADD_COMMENTS, ADD_DISHES, ADD_PROMOS, COMMENTS_FAILED, DIH
 import { baseUrl } from "../shared/baseUrl";
 
 
-export const addComment=(dishId,author,comment,rating) =>({
+export const addComment=(comment) =>({
             type: ADD_COMMENT,
-            payload:{
-                dishId:dishId,
-                author:author,
-                comment: comment,
-                rating: rating ,
-            }
+            payload: comment,
 });
+
+export const postComment=(dishId,author,comment,rating) => (dispatch) =>{
+    var newComment={
+        dishId:dishId,
+        author:author,
+        rating: rating,
+        comment : comment,
+    }
+    newComment.date = new Date().toISOString();
+
+    return fetch(baseUrl+"comments",{
+        method:"POST",
+        body: JSON.stringify(newComment),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin',
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+      })
+    .then(res => res.json())
+    .then(res => dispatch(addComment(res)))
+    .catch(error => {console.log(error);});
+}
 
 export const fetchDishes=()=>(dispatch)=>{
     dispatch(dishesLoading(true));

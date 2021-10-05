@@ -25,7 +25,7 @@ class CommentForm extends Component {
         console.log(this.state.show);
     }
     handleSubmit(val) {
-            this.props.addComment(this.props.dishId,val.name,val.comment,val.rating)
+            this.props.postComment(this.props.dishId,val.name,val.comment,val.rating)
     }
 
     render() {
@@ -106,7 +106,7 @@ class CommentForm extends Component {
 /////////////////////////////////////////////////////////////////////
 
 export default function DishdetailComponent (props){
-    const renderComments = (comments,addComment,dishId) => {
+    const renderComments = (comments,postComment,dishId) => {
         if (comments != null) {
             return (
                 <div >
@@ -125,7 +125,7 @@ export default function DishdetailComponent (props){
                             )
                         })}
                     </ul>
-                    <CommentForm addComment={addComment} dishId={dishId}/>
+                    <CommentForm postComment={postComment} dishId={dishId}/>
                 </div>
             )
         }
@@ -175,7 +175,7 @@ export default function DishdetailComponent (props){
                         </Card>
                     </div>
                     <div className='col-12 col-md-5 m-1'>
-                        {renderComments(props.comments,props.addComment,props.dish.id)}
+                        {renderComments(props.comments,props.postComment,props.dish.id)}
                     </div>
 
                 </div>
