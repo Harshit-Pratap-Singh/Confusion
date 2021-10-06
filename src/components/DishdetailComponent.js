@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import { baseUrl } from '../shared/baseUrl';
 import Loading from './Loading';
+import {FadeTransform,Fade ,Stagger} from 'react-animation-components';
 
 const required = (val) => (val) && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -112,18 +113,23 @@ export default function DishdetailComponent (props){
                 <div >
                     <h4>Comments</h4>
                     <ul className='list-unstyled'>
+                    <Stagger in>
+
                         {comments.map((item) => {
                             return (
-
+                                <Fade in>
                                 <li key={item.id}>
                                     <div className='mb-4'> {item.comment}</div>
                                     <div className='mb-4'>
                                         --{item.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(item.date)))}
                                     </div>
                                 </li>
+                                </Fade>
 
-                            )
+
+                            );
                         })}
+                        </Stagger>
                     </ul>
                     <CommentForm postComment={postComment} dishId={dishId}/>
                 </div>
@@ -160,8 +166,14 @@ export default function DishdetailComponent (props){
                         <hr />
                     </div>
                 </div>
+                
                 <div className="row">
                     <div className='col-12 col-md-5 m-1'>
+                    <FadeTransform
+                 in
+                 transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
                         <Card>
                             <CardImg width='100%' src={baseUrl+props.dish.image} alt={props.dish.name} />
                             <CardBody>
@@ -173,6 +185,7 @@ export default function DishdetailComponent (props){
                                 </CardText>
                             </CardBody>
                         </Card>
+                        </FadeTransform>
                     </div>
                     <div className='col-12 col-md-5 m-1'>
                         {renderComments(props.comments,props.postComment,props.dish.id)}
