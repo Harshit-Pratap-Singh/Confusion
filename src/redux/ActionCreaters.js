@@ -1,4 +1,4 @@
-import { ADD_COMMENT, ADD_COMMENTS, ADD_DISHES, ADD_LEADERS, ADD_PROMOS, COMMENTS_FAILED, DIHSES_FAILED, DISHES_LOADING, LEADERS_FAILED, LEADERS_LOADING, PROMOS_FAILED, PROMOS_LOADING } from "./ActionType";
+import { ADD_COMMENT, ADD_COMMENTS, ADD_DISHES, ADD_FEEDBACK, ADD_LEADERS, ADD_PROMOS, COMMENTS_FAILED, DIHSES_FAILED, DISHES_LOADING, LEADERS_FAILED, LEADERS_LOADING, PROMOS_FAILED, PROMOS_LOADING } from "./ActionType";
 import { baseUrl } from "../shared/baseUrl";
 
 
@@ -180,3 +180,44 @@ export const addLeaders=(leaders) =>({
 export const leadersLoading=() =>({
     type: LEADERS_LOADING
 });
+
+
+export const postFeedback=(firstName , lastName,telNum, email, agree, contactType , message) => (dispatch) =>{
+    
+    var newFeedback ={
+        firstName : firstName,
+        lastName : lastName,
+        telNum : telNum ,
+        email : email,
+        agree: agree ,
+        contactType: contactType,
+        message: message,
+    }
+
+    newFeedback.date=new Date().toISOString();
+
+
+    return fetch(baseUrl+"feedback",{
+        method:"POST",
+        body: JSON.stringify(newFeedback),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin',
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+      })
+    .then(res => res.json())
+    .catch(error => {console.log(error);});
+}

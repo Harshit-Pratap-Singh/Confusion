@@ -10,7 +10,7 @@ const minLength=(len)=> (val)=> (val) && (val.length>len);
 const isNum=(val)=> !isNaN(Number(val));
 const validEmail=val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
-// console.log(isNaN(Number('123')))
+
 
 class Contact extends Component {
     constructor(props) {
@@ -21,8 +21,9 @@ class Contact extends Component {
     }
 
     handleSubmit(values) {
-        console.log("Current state>>>" + JSON.stringify(values));
+        console.log(values.firstName);
         alert("Current state>>>" + JSON.stringify(values));
+        this.props.postFeedback(values.firstName , values.lastName,values.telNum ,values.email, values.agree, values.contactType, values.message);
         this.props.resetFeedbackForm();
 
     }

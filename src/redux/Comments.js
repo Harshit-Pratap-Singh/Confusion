@@ -1,4 +1,3 @@
-import {COMMENTS} from '../shared/comments';
 import { ADD_COMMENT, ADD_COMMENTS, COMMENTS_FAILED } from './ActionType';
 
 export  const Comments = (state={

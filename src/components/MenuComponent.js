@@ -5,6 +5,7 @@ import { baseUrl } from '../shared/baseUrl';
 import Loading from './Loading';
 
 export default function Menu(props){
+    console.log(props.dishes.dishes);
         const menu = props.dishes.dishes.map((dish) => {
             return (
                 <div key={dish.id} className="col-12 col-md-5 m-1">
