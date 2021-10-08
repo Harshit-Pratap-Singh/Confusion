@@ -12,7 +12,7 @@ function RenderCard({item,isLoading,errorMess}){
         return  <h4>{errorMess}</h4>       
     }
     else{
-        console.log(item.image);
+        console.log(item);
     return <>
      <FadeTransform
                 in
@@ -42,7 +42,7 @@ function Home(props) {
                     <RenderCard item={props.promotion} isLoading={props.promosLoading} errorMess={props.promosErrorMess}/>
                 </div>
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.leader} />
+                    <RenderCard item={props.leader} isLoading={props.leadersLoading} errorMess={props.leadersErrorMess} />
                 </div>
             </div>
         </div>

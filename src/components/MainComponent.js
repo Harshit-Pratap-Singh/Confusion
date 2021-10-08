@@ -8,7 +8,7 @@ import { Redirect, Route, Switch, withRouter } from 'react-router';
 import Contact from './Contact';
 import Aboutus from './Aboutus';
 import { connect } from 'react-redux';
-import { postComment ,fetchComments,fetchDishes, fetchPromos} from '../redux/ActionCreaters';
+import { postComment ,fetchComments,fetchDishes, fetchPromos, fetchLeaders} from '../redux/ActionCreaters';
 import { actions } from 'react-redux-form';
 import {TransitionGroup,CSSTransition} from 'react-transition-group';
 
@@ -28,6 +28,7 @@ const mapDispatchToProps=dispatch =>({
   resetFeedbackForm: () => {dispatch(actions.reset('feedback'))},
   fetchComments:()=> dispatch(fetchComments()),
   fetchPromos:()=> dispatch(fetchPromos()),
+  fetchLeaders:() => dispatch(fetchLeaders()),
 
 })
 
@@ -40,6 +41,7 @@ class Main extends Component {
    this.props.fetchDishes();
    this.props.fetchComments();
    this.props.fetchPromos();
+   this.props.fetchLeaders();
 
  }
   render() {
@@ -47,11 +49,13 @@ class Main extends Component {
 
     const HomePage=() => <Home dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
      promotion={this.props.promotions.promotions.filter((promotion) => promotion.featured)[0]} 
-     leader={this.props.leaders.filter((leader) => leader.featured)[0]}
+     leader={this.props.leaders.leaders.filter((leader) => leader.featured)[0]}
      dishesLoading={this.props.dishes.isLoading}
      dishesErrorMess={this.props.dishes.errorMess}
      promosLoading={this.props.promotions.isLoading}
      promosErrorMess={this.props.promotions.errorMess}
+     leadersLoading={this.props.leaders.isLoading}
+     leadersErrorMess={this.props.leaders.errorMess}
      />
     const DishWithId=({match}) =>{
       console.log(this.props.dishes.dishes.filter((dish) => dish.id===parseInt(match.params.dishId,10))[0]);

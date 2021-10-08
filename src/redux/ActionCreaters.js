@@ -1,4 +1,4 @@
-import { ADD_COMMENT, ADD_COMMENTS, ADD_DISHES, ADD_PROMOS, COMMENTS_FAILED, DIHSES_FAILED, DISHES_LOADING, PROMOS_FAILED, PROMOS_LOADING } from "./ActionType";
+import { ADD_COMMENT, ADD_COMMENTS, ADD_DISHES, ADD_LEADERS, ADD_PROMOS, COMMENTS_FAILED, DIHSES_FAILED, DISHES_LOADING, LEADERS_FAILED, LEADERS_LOADING, PROMOS_FAILED, PROMOS_LOADING } from "./ActionType";
 import { baseUrl } from "../shared/baseUrl";
 
 
@@ -143,4 +143,40 @@ export const addPromos=(promotions) =>({
 
 export const promosLoading=() =>({
     type: PROMOS_LOADING
+});
+
+
+export const fetchLeaders=()=>(dispatch)=>{ 
+    dispatch(leadersLoading());
+
+    return fetch(baseUrl+'leaders')
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+      })
+    .then(res => res.json())
+    .then(leaders => dispatch(addLeaders(leaders)))
+    .catch(error => dispatch(leadersFailed(error.message)));
+}
+export const leadersFailed=(errormess) =>({
+    type: LEADERS_FAILED,
+    payload: errormess
+});
+
+export const addLeaders=(leaders) =>({
+    type: ADD_LEADERS,
+    payload: leaders,
+});
+
+export const leadersLoading=() =>({
+    type: LEADERS_LOADING
 });
